@@ -4,7 +4,6 @@ import in.kluniversity.fsd.employeeservice.entity.AppUser;
 import in.kluniversity.fsd.employeeservice.repository.AppUserRepository;
 import in.kluniversity.fsd.employeeservice.security.JwtService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,8 +49,4 @@ public class AuthController {
         String role = users.findByUsername(req.username()).map(AppUser::getRole).orElse("USER");
         return new AuthResponse(jwtService.generateToken(req.username(), role), "Bearer");
     }
-
-    public record AuthRequest(@NotBlank String username, @NotBlank String password) {}
-    public record RegisterRequest(@NotBlank String username, @NotBlank String password, String role) {}
-    public record AuthResponse(String token, String tokenType) {}
 }
